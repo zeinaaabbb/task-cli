@@ -1,26 +1,37 @@
-{
-    "tasks" :[
-        {
-            "id": 1 ,
-            "description": "Clean the house",
-            "status": "todo",
-            "createdAt": "2025-11-28T10:00:00Z",
-            "updatedAt": ""
-        },
-        {
-            "id": 2 ,
-            "description": "Write report",
-            "status": "in-progress",
-            "createdAt": "2025-11-27T09:30:00Z",
-            "updatedAt": "2025-11-28T11:00:00Z"
-        },
-        {
-            "id": 3 ,
-            "description": "Write music",
-            "status": "in-progress",
-            "createdAt": "2025-11-27T09:30:00Z",
-            "updatedAt": "2025-11-28T11:00:00Z"   
-        }
-        
-    ]
-}
+[
+  {
+    "id": 1,
+    "description": "Clean the house",
+    "status": "todo",
+    "createdAt": "2025-11-28T10:00:00Z",
+    "updatedAt": ""
+  },
+  {
+    "id": 2,
+    "description": "Write report",
+    "status": "in-progress",
+    "createdAt": "2025-11-27T09:30:00Z",
+    "updatedAt": "2025-11-28T11:00:00Z"
+  },
+  {
+    "id": 3,
+    "description": "Write music",
+    "status": "in-progress",
+    "createdAt": "2025-11-27T09:30:00Z",
+    "updatedAt": "2025-11-28T11:00:00Z"
+  },
+  {
+    "id": 4,
+    "description": "post office",
+    "status": "todo",
+    "createdAt": "2025-11-08T16:30:56.640Z",
+    "updatedAt": "2025-11-08T16:30:56.641Z"
+  },
+  {
+    "id": 5,
+    "description": "buy milk",
+    "status": "todo",
+    "createdAt": "2025-11-08T16:31:56.605Z",
+    "updatedAt": "2025-11-08T16:31:56.607Z"
+  }
+]
