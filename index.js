@@ -4,7 +4,7 @@ import fs from 'fs'
 function list() {
         try {
             const data = fs.readFileSync('tasks.json', 'utf8');
-            const tasks = JSON.parse(data);
+            const tasks = JSON.parse(data)
 
             tasks.forEach(task => {
                 console.log([task.id], task.description, "--", task.status);
@@ -15,13 +15,14 @@ function list() {
             }
 
         } catch (error) {
-            console.error(error);
+            console.error("There is an error:", error.message);
+            process.exit(1);
         }
 }
 
 
-function add(description) {
-    if (!description || !description.trim()){
+function add(addDescription) {
+    if (!addDescription || !addDescription.trim()){
         console.log("To add a task, please enter a description!");
         process.exit(1);
     }
@@ -39,7 +40,7 @@ function add(description) {
 
             const newTask = {
                 "id": 1,
-                "description": description,
+                "description": addDescription,
                 "status": "todo",
                 "createdAt": createdAt,
                 "updatedAt": updatedAt
@@ -58,7 +59,7 @@ function add(description) {
             const addNewId = largestId + 1
             const newTask = { 
                 "id": addNewId,
-                "description": description,
+                "description": addDescription,
                 "status": "todo",
                 "createdAt": createdAt,
                 "updatedAt": updatedAt
@@ -70,19 +71,19 @@ function add(description) {
         }
 
         } catch (error) {
-            console.log(error);
+            console.error("There is an error:", error.message);
         }
 
     }
 }
 
-function update({id, description}) {
+function update({id, updateDescription}) {
     if (!id) {
         console.log("\nProvide the 'id' of the task you would like to update followed by the new task 'description'\n")
         return list()
     }
 
-    if (!description) {
+    if (!updateDescription) {
         console.log("\nProvide the 'description' of the new task\n")
         return list()
     }
@@ -100,7 +101,7 @@ function update({id, description}) {
         
         const updatedTask = {
             id: tasks[index].id,
-            description: description,
+            description: updateDescription,
             status: tasks[index].status,
             createdAt: tasks[index].createdAt,
             updatedAt: new Date().toISOString()
@@ -112,29 +113,57 @@ function update({id, description}) {
         console.log("Task updated successfully:", updatedTask);
 
     } catch(error) {
-        console.error(error)
+        console.error("There is an error:", error.message);
     }
 
 }
 
-function deleteTask() {
-    console.log("I want to make a deletion")
+function deleteTask(id) {
+
+    if (!id){
+        console.log("Please provide an id of the task you would like to delete")
+        list();
+    }
+
+    try {
+    
+    const data = fs.readFileSync('tasks.json', 'utf8');
+    const tasks = JSON.parse(data);
+
+    
+    const index = tasks.findIndex((t => t.id === id))
+    
+    if (index === -1 ){
+        console.log("This task id has not been found, select from exisiting one")
+        return list();
+    }
+    
+    const updatedTask = tasks.filter(t => t.id !==id)
+
+    fs.writeFileSync('./tasks.json', JSON.stringify(updatedTask, null, 2));
+    console.log("Task deleted successfully");
+    list();
+
+    } catch(error) {
+        console.log("There is an error:", error.message)
+    }
 }
 
 
 const argumentList = process.argv.slice(2)
 const command = argumentList[0]
 const id = Number(argumentList[1])
-const description = argumentList.slice(2).join(" ")
+const addDescription = argumentList.slice(1).join(" ")
+const updateDescription = argumentList.slice(2).join(" ")
 
 if (command === "add"){
-    add(description);
+    add(addDescription);
 } else if (command === "list"){
     list();
 } else if (command === "update"){
-    update({ id,  description });
+    update({ id,  updateDescription });
 } else if (command === "delete") {
-    deleteTask();
+    deleteTask(id);
 } else {
     console.log(" :) Your Task Manager:",`\n`, `\n`,"Please select the following commands:",`\n`,"-'list' ",`\n`,"-'add' ", `\n`,"-'update' ", `\n`,"-'delete'" )
 }
