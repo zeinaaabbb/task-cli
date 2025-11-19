@@ -1,14 +1,40 @@
 import process from 'process';
 import fs from 'fs'
 
-function list() {
+function list(taskStatus) {
         try {
             const data = fs.readFileSync('tasks.json', 'utf8');
-            const tasks = JSON.parse(data)
+            const tasks = JSON.parse(data);
 
-            tasks.forEach(task => {
+            if (taskStatus === "todo"){
+                const taskstate = tasks.filter(t => t.status === "todo")
+                if (taskstate.length === 0){
+                    console.log("This task status does not exisit")
+                }
+                taskstate.forEach(task => {
+                    console.log([task.id], task.description, "--", task.status)
+                });
+            } else if (taskStatus === "in-progress"){
+                const taskstate = tasks.filter(t => t.status === "in-progress")
+                if (taskstate.length === 0){
+                    console.log("This task status does not exisit")
+                }
+                taskstate.forEach(task => {
+                    console.log([task.id], task.description, "--", task.status)
+                });
+            } else if (taskStatus === "done"){
+                const taskstate = tasks.filter(t => t.status === "done")
+                if (taskstate.length === 0){
+                    console.log("This task status does not exisit")
+                }
+                taskstate.forEach(task => {
+                    console.log([task.id], task.description, "--", task.status)
+                });
+            } else {
+                tasks.forEach(task => {
                 console.log([task.id], task.description, "--", task.status);
-            })
+                });
+            }
 
             if (tasks.length === 0){
                 console.log("There are no tasks available to list. Use 'add' followed by your task description to create a new task entry!");
@@ -19,7 +45,6 @@ function list() {
             process.exit(1);
         }
 }
-
 
 function add(addDescription) {
     if (!addDescription || !addDescription.trim()){
@@ -78,14 +103,15 @@ function add(addDescription) {
 }
 
 function update({id, updateDescription}) {
+
     if (!id) {
         console.log("\nProvide the 'id' of the task you would like to update followed by the new task 'description'\n")
-        return list()
+        return list();
     }
 
     if (!updateDescription) {
         console.log("\nProvide the 'description' of the new task\n")
-        return list()
+        return list();
     }
 
     try {
@@ -94,7 +120,7 @@ function update({id, updateDescription}) {
 
         const index = tasks.findIndex((t => t.id === id))
 
-        if (index === -1 ){
+        if (id && index === -1 ){
             console.log("This task id has not been found")
             return list();
         }
@@ -106,7 +132,7 @@ function update({id, updateDescription}) {
             createdAt: tasks[index].createdAt,
             updatedAt: new Date().toISOString()
         }
-        
+
         tasks[index] = updatedTask
         
         fs.writeFileSync('./tasks.json', JSON.stringify(tasks, null, 2));
@@ -114,6 +140,46 @@ function update({id, updateDescription}) {
 
     } catch(error) {
         console.error("There is an error:", error.message);
+    }
+
+}
+
+function updateStatus(id){
+
+    if (!id) {
+        console.log("Please provide the 'id' to update the status from the following tasks");
+        return list();
+    }
+
+    try {
+
+        const data = fs.readFileSync('tasks.json', 'utf8');
+        const tasks = JSON.parse(data);
+
+        const index = tasks.findIndex((t => t.id === id))
+
+        if (id && index === -1 ){
+            console.log("This task id has not been found")
+            return list();
+        }
+
+        const statusChange = command.slice(5);
+        
+        const updatedStatus = {
+            id: tasks[index].id,
+            description: tasks[index].description,
+            status: statusChange,
+            createdAt: tasks[index].createdAt,
+            updatedAt: new Date().toISOString()
+        }
+
+        tasks[index] = updatedStatus
+
+        fs.writeFileSync('./tasks.json', JSON.stringify(tasks, null, 2));
+        console.log("Task updated successfully:", updatedStatus);
+
+    } catch(error){
+        console.error(error.message)
     }
 
 }
@@ -126,11 +192,10 @@ function deleteTask(id) {
     }
 
     try {
-    
+
     const data = fs.readFileSync('tasks.json', 'utf8');
     const tasks = JSON.parse(data);
 
-    
     const index = tasks.findIndex((t => t.id === id))
     
     if (index === -1 ){
@@ -155,15 +220,18 @@ const command = argumentList[0]
 const id = Number(argumentList[1])
 const addDescription = argumentList.slice(1).join(" ")
 const updateDescription = argumentList.slice(2).join(" ")
+const taskStatus = argumentList.slice(1).join(" ")
 
 if (command === "add"){
     add(addDescription);
 } else if (command === "list"){
-    list();
+    list(taskStatus);
 } else if (command === "update"){
     update({ id,  updateDescription });
+} else if (command === "mark-in-progress" || command === "mark-done" || command === "mark-todo"){
+    updateStatus(id);
 } else if (command === "delete") {
     deleteTask(id);
 } else {
-    console.log(" :) Your Task Manager:",`\n`, `\n`,"Please select the following commands:",`\n`,"-'list' ",`\n`,"-'add' ", `\n`,"-'update' ", `\n`,"-'delete'" )
+    console.log(" Your Task Manager:",`\n`, `\n`,"Please select the following commands:",`\n`,"-'list' (to list all)" ,`\n`, "-'list mark-[status]' (to can sort and change by the following status: 'todo', 'in-progess', 'done')",`\n`,"-'add' (provide a descriprion) ", `\n`,"-'update' (provide the exisiting id and new description) ", `\n`,"-'delete' (provide the id)" )
 }

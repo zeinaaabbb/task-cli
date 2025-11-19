@@ -2,9 +2,9 @@
   {
     "id": 1,
     "description": "order cake",
-    "status": "todo",
+    "status": "done",
     "createdAt": "2025-11-28T10:00:00Z",
-    "updatedAt": "2025-11-11T23:21:10.463Z"
+    "updatedAt": "2025-11-19T10:21:33.854Z"
   },
   {
     "id": 2,
@@ -44,16 +44,16 @@
   {
     "id": 7,
     "description": "wash bedding",
-    "status": "in-progress",
+    "status": "todo",
     "createdAt": "2025-11-27T09:30:00Z",
-    "updatedAt": "2025-11-11T23:23:20.931Z"
+    "updatedAt": "2025-11-19T10:36:03.749Z"
   },
   {
     "id": 8,
     "description": "360 feedback",
-    "status": "todo",
+    "status": "done",
     "createdAt": "2025-11-14T11:27:22.366Z",
-    "updatedAt": "2025-11-14T11:27:22.372Z"
+    "updatedAt": "2025-11-19T10:32:51.621Z"
   },
   {
     "id": 9,
@@ -61,5 +61,12 @@
     "status": "todo",
     "createdAt": "2025-11-15T18:35:07.666Z",
     "updatedAt": "2025-11-15T18:35:07.667Z"
+  },
+  {
+    "id": 10,
+    "description": "buy concert tickets",
+    "status": "todo",
+    "createdAt": "2025-11-18T17:52:21.831Z",
+    "updatedAt": "2025-11-18T17:52:48.658Z"
   }
 ]
