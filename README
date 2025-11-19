@@ -1,0 +1,100 @@
+# Task Tracker 
+A simple Command Line Interface (CLI) tool to manage your tasks and keep track of your todo-list 
+
+![demo](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnJ3cnl1cDRwM2R2amh6NWQ3N2xjNjI4bmJrN2FveGFkcDdlNHhmZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GB6KIjMP4ozFqw02ED/giphy.gif) 
+
+## Table of Contents 
+- [Description](#description)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage) 
+- [Examples](#examples) 
+- [Data Storage](#data-storage)
+
+## Features
+- `Add` a new task by adding a new task description 
+- Get the `list` of all tasks
+- Get the list by filtering by status `list todo`, `list in-progress`, `list done`
+- Change a task status by `mark-todo`, `mark-in-progress`, `mark-done` 
+- `Update` a task by providing the existing `id` and new task `description`
+- `Delete` a task by providing the existing `id`
+
+## Installation  
+```
+git clone git@github.com:zeinaaabbb/task-cli.git
+cd task-cli
+```
+## Pre-requisites
+
+node.js version +18
+
+
+## Usage
+
+```
+node index <command> [options]
+e.g. command availble : list, add, update, delete
+
+node index --help
+To get full list of available commands
+
+```
+
+## Examples
+
+`add` a new task
+
+```
+node index add "Buy new party shoes"
+# Output: Task added successfully: {
+  id: 11,
+  description: 'Buy new party shoes',
+  status: 'todo',
+  createdAt: '2025-11-19T13:56:02.122Z',
+  updatedAt: '2025-11-19T13:56:02.129Z'
+}
+```
+
+`update` and `delete` tasks
+```
+node index update 1 "Read 6 pages from book"
+node index delete 1
+```
+
+Marking a task as `mark-todo`, `mark-in-progress` or `mark-done`
+```
+node index mark-in-progress 1
+node index mark-done 1
+```
+
+`List` all tasks or by status
+```
+node index list
+node index list done
+node index list todo
+node index list in-progress
+```
+
+
+## Data storage
+
+Task data is stored in the `tasks.json` file and with the following properties:
+- `id`: A unique identifier for the task
+- `description`: A short description of the task
+- `status`: The status of the task (`todo`, `in-progress`, `done`)
+- `createdAt`: The date and time when the task was created 
+- `updatedAt`: The date and time when the task was last updated
+
+Example: 
+
+```
+[
+  {
+    "id": 1,
+    "description": "order cake",
+    "status": "done",
+    "createdAt": "2025-11-28T10:00:00Z",
+    "updatedAt": "2025-11-19T10:21:33.854Z"
+  }
+]
+```

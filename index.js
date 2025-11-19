@@ -189,6 +189,7 @@ function deleteTask(id) {
     if (!id){
         console.log("Please provide an id of the task you would like to delete")
         list();
+        process.exit(1);
     }
 
     try {
@@ -198,7 +199,7 @@ function deleteTask(id) {
 
     const index = tasks.findIndex((t => t.id === id))
     
-    if (index === -1 ){
+    if (id && index === -1 ){
         console.log("This task id has not been found, select from exisiting one")
         return list();
     }
@@ -207,7 +208,6 @@ function deleteTask(id) {
 
     fs.writeFileSync('./tasks.json', JSON.stringify(updatedTask, null, 2));
     console.log("Task deleted successfully");
-    list();
 
     } catch(error) {
         console.log("There is an error:", error.message)
@@ -232,6 +232,8 @@ if (command === "add"){
     updateStatus(id);
 } else if (command === "delete") {
     deleteTask(id);
+} else if (command === "--help") {
+    console.log(" Your Task Manager:",`\n`, `\n`,"Please select the following commands:",`\n`,"-'list' (to list all)" ,`\n`, "-'list mark-[status]' (to can sort and change by the following status: 'todo', 'in-progess', 'done')",`\n`,"-'add' (provide a descriprion) ", `\n`,"-'update' (provide the exisiting id and new description) ", `\n`,"-'delete' (provide the id)" )
 } else {
     console.log(" Your Task Manager:",`\n`, `\n`,"Please select the following commands:",`\n`,"-'list' (to list all)" ,`\n`, "-'list mark-[status]' (to can sort and change by the following status: 'todo', 'in-progess', 'done')",`\n`,"-'add' (provide a descriprion) ", `\n`,"-'update' (provide the exisiting id and new description) ", `\n`,"-'delete' (provide the id)" )
 }
