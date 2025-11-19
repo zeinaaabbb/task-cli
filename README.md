@@ -4,14 +4,15 @@ A simple Command Line Interface (CLI) tool to manage your tasks and keep track o
 ![demo](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnJ3cnl1cDRwM2R2amh6NWQ3N2xjNjI4bmJrN2FveGFkcDdlNHhmZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GB6KIjMP4ozFqw02ED/giphy.gif) 
 
 ## Table of Contents 
-- [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
+- [Prerequisites](#prerequisites)
 - [Usage](#usage) 
 - [Examples](#examples) 
 - [Data Storage](#data-storage)
 
 ## Features
+
 - `Add` a new task by adding a new task description 
 - Get the `list` of all tasks
 - Get the list by filtering by status `list todo`, `list in-progress`, `list done`
@@ -20,55 +21,57 @@ A simple Command Line Interface (CLI) tool to manage your tasks and keep track o
 - `Delete` a task by providing the existing `id`
 
 ## Installation  
-```
+```bash
 git clone git@github.com:zeinaaabbb/task-cli.git
 cd task-cli
 ```
-## Pre-requisites
+## Prerequisites
 
-node.js version +18
-
+node.js version 18+
 
 ## Usage
-
-```
+```bash
 node index <command> [options]
-e.g. command availble : list, add, update, delete
+# e.g. command available : list, add, update, delete
 
 node index --help
-To get full list of available commands
+# To get full list of available commands
 
 ```
 
 ## Examples
 
-`add` a new task
+### `add` a new task
 
-```
+```bash
 node index add "Buy new party shoes"
-# Output: Task added successfully: {
-  id: 11,
-  description: 'Buy new party shoes',
-  status: 'todo',
-  createdAt: '2025-11-19T13:56:02.122Z',
-  updatedAt: '2025-11-19T13:56:02.129Z'
-}
+# Output:
+# {
+#   id: 11,
+#   description: "Buy new party shoes",
+#   status: "todo",
+#   createdAt: "2025-11-19T13:56:02.122Z",
+#   updatedAt: "2025-11-19T13:56:02.129Z"
+# }
 ```
 
-`update` and `delete` tasks
-```
+### `update` and `delete` tasks
+
+```bash
 node index update 1 "Read 6 pages from book"
 node index delete 1
 ```
 
-Marking a task as `mark-todo`, `mark-in-progress` or `mark-done`
-```
+### Marking a task as `mark-todo`, `mark-in-progress` or `mark-done`
+
+```bash
 node index mark-in-progress 1
 node index mark-done 1
 ```
 
-`List` all tasks or by status
-```
+### `List` all tasks or by status
+
+```bash
 node index list
 node index list done
 node index list todo
@@ -76,7 +79,7 @@ node index list in-progress
 ```
 
 
-## Data storage
+## Data Storage
 
 Task data is stored in the `tasks.json` file and with the following properties:
 - `id`: A unique identifier for the task
@@ -85,9 +88,9 @@ Task data is stored in the `tasks.json` file and with the following properties:
 - `createdAt`: The date and time when the task was created 
 - `updatedAt`: The date and time when the task was last updated
 
-Example: 
+### Example: 
 
-```
+```json
 [
   {
     "id": 1,
